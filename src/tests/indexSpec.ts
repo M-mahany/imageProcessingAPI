@@ -29,11 +29,11 @@ describe('testing by filename', () => {
 })
 
 describe('testing by query width and height for reszing', () => {
-  it('testing query if one of them are missing will thorw an error asking for full query', async () => {
+  it('testing query if one of them are missing will resize the given query only with aspec ratio', async () => {
     const response = await request.get('/api/image?filename=fjord&width=300')
-    expect(response.status).toBe(400)
+    expect(response.status).toBe(200)
   })
-  it('testing if width adn height provided will either get filename if exists or resize image and fetch it', async () => {
+  it('testing if width and height provided will either get filename if exists or resize image and fetch it', async () => {
     const response = await request.get(
       '/api/image?filename=fjord&width=300&height=300'
     )
