@@ -1,5 +1,7 @@
 import supertest from 'supertest'
 import app from '..'
+import fs from 'fs'
+import path from 'path'
 
 const request = supertest(app)
 
@@ -13,7 +15,7 @@ describe('testing main endpoint for server app', () => {
 describe('testing server query in case of success and failure', () => {
   it('testing query if success will get image', async () => {
     const response = await request.get('/api/image?filename=fjord')
-    expect(response.type).toBe('image/jpeg')
+    expect(response.status).toBe(200)
   })
   it('testing query if missing or not correctly typed as {filename=}', async () => {
     const response = await request.get('/api/image?')
@@ -45,5 +47,18 @@ describe('testing by query width and height for reszing', () => {
       '/api/image?filename=fjord&width=hello&height=300'
     )
     expect(response.status).toBe(400)
+  })
+})
+describe('test if resized image was created in this test', () => {
+  it('let test by deleting the test image', async () => {
+    const resizedimgTest = path.join(
+      __dirname,
+      '../../resizedImages/fjord-300-300.jpg'
+    )
+
+    fs.unlink(resizedimgTest, (err) => {
+      if (err) throw err
+      console.log(`successfully deleted ${resizedimgTest}`)
+    })
   })
 })

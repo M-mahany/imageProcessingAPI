@@ -41,6 +41,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var __1 = __importDefault(require(".."));
+var fs_1 = __importDefault(require("fs"));
+var path_1 = __importDefault(require("path"));
 var request = (0, supertest_1.default)(__1.default);
 describe('testing main endpoint for server app', function () {
     it('Get the  main /endpoint', function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -64,7 +66,7 @@ describe('testing server query in case of success and failure', function () {
                 case 0: return [4 /*yield*/, request.get('/api/image?filename=fjord')];
                 case 1:
                     response = _a.sent();
-                    expect(response.type).toBe('image/jpeg');
+                    expect(response.status).toBe(200);
                     return [2 /*return*/];
             }
         });
@@ -132,6 +134,20 @@ describe('testing by query width and height for reszing', function () {
                     expect(response.status).toBe(400);
                     return [2 /*return*/];
             }
+        });
+    }); });
+});
+describe('test if resized image was created in this test', function () {
+    it('let test by deleting the test image', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var resizedimgTest;
+        return __generator(this, function (_a) {
+            resizedimgTest = path_1.default.join(__dirname, '../../resizedImages/fjord-300-300.jpg');
+            fs_1.default.unlink(resizedimgTest, function (err) {
+                if (err)
+                    throw err;
+                console.log("successfully deleted ".concat(resizedimgTest));
+            });
+            return [2 /*return*/];
         });
     }); });
 });

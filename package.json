@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run clean && npm run build",
+    "test": "npm run clean && npm run build && npm run copy-files && npm run jasmine",
+    "copy-files":"copyfiles  sourceImage/** dist/",
     "clean": "rimraf ./dist",
     "jasmine": "jasmine",
     "build": "npx tsc",
     "start": "nodemon src/index.ts ",
     "lint": "eslint . --ext .ts",
-    "prettier": "prettier --write src/api/routes/*.ts",
+    "prettier": "prettier --write src/**/*.ts",
     "lint:fix": "eslint --fix *.ts"
   },
   "keywords": [],
